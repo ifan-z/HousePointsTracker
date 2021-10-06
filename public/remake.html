@@ -92,19 +92,21 @@
     font-weight: bold;
     font-size: 40px;
   }
-  .navigation{
+  ul {
+    list-style-type: none;
     margin: 0;
     padding: 0;
     overflow: hidden;
     background-color: #9f9275;
-    /* position: fixed;
+    position: fixed;
     top: 0;
     left: 0;
-    right: 0; */
-    /* The above part is causing issues with the dropdown menu, the fixed position is not allowing it to appear */
+    right: 0;
   }
-  .navigation > a{
-    float: left;
+  li {
+    display: inline;
+  }
+  li a {
     display: block;
     color: white;
     text-align: center;
@@ -112,7 +114,7 @@
     text-decoration: none;
     font-family: fantasy;
   }
-  .navigation > a:hover{
+  li > a:hover {
     background-color: #8f8264;
   }
   .active{
@@ -122,67 +124,50 @@
     float: left;
     overflow: hidden;
   }
-  .dropdown .dropbutton{
-    font-size: 16px;
-    border: none;
-    outline: none;
-    color: white;
-    padding: 14px 16px;
-    background-color: inherit;
-    font-family: fantasy;
-    margin: 0;
-  }
-  .navigation .dropbutton:hover, .dropdown:hover .dropbutton {
-    background-color: #8f8264;
-  }
-  .houses{
+  .houses {
     display: none;
-    position: absolute;
+    position: relative;
     background-color: #f9f9f9;
     min-width: 160px;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
     z-index: 1;
   }
-  .houses > a{
-    float: none;
+  .houses > a {
     color: black;
-    padding: 12px 16px;
-    text-decoration: none;
     display: block;
-    text-align: left;
   }
-  .houses > a:hover{
-    background-color: #ddd;
+  .houses > a:hover {
+    background-color: #f1f1f1
   }
-  .dropdown:hover .houses{
+  .dropdown:hover .houses {
     display: block;
   }
 </style>
 <body>
-  <div class="navigation">
-    <a class="active" href="#podium">Podium</a> <!-- Home page if not signed in or if not administrator -->
-    <a href="#fullranking">Full Ranking</a> <!-- Only signed in users can view this option -->
-    <a href="#pointrecord">Point Record</a> <!-- Only administrators (teachers/house heads) can see this option -->
-    <div class="dropdown"> <!-- Dropdown menu -->
-      <button class="dropbutton">Houses ▼</button>
-      <div class="houses"> <!-- Options -->
-        <a href="#acres">Acres</a>
-        <a href="#dupont">Dupont</a>
-        <a href="#grier">Grier</a>
-        <a href="#griffith">Griffith</a>
-        <a href="#lamont">Lamont</a>
-        <a href="#langtry">Langtry</a>
-        <a href="#mac">Mac</a>
-        <a href="#marling">Marling</a>
-        <a href="#nation">Nation</a>
-        <a href="#pyper">Pyper</a>
-        <a href="#rosseter">Rosseter</a>
-        <a href="#walsh">Walsh</a>
+  <ul>
+    <li style="float:left"><a class="active" href="#podium">Podium</a></li> <!-- Home page if not signed in or if not administrator -->
+    <li style="float:left"><a href="#fullranking">Full Ranking</a></li> <!-- Only signed in users can view this option -->
+    <li style="float:left"><a href="#pointrecord">Point Record</a></li> <!-- Only administrators (teachers/house heads) can see this option -->
+    <li style="float:left">
+      <div class="dropdown"><a>Houses ▼</a>
+        <div class="houses">
+          <a href="#acres">Acres</a>
+          <a href="#acres">Dupont</a>
+          <a href="#acres">Grier</a>
+          <a href="#acres">Griffith</a>
+          <a href="#acres">Lamont</a>
+          <a href="#acres">Langtry</a>
+          <a href="#acres">Mac</a>
+          <a href="#acres">Marling</a>
+          <a href="#acres">Nation</a>
+          <a href="#acres">Pyper</a>
+          <a href="#acres">Rosseter</a>
+          <a href="#acres">Walsh</a>
+        </div>
       </div>
-    </div>
-    <a href="#signin" style="float:right">Sign In</a>
-  </div>
-   <!--  -->
+    </li> <!-- Dropdown menu -->
+    <li style="float:right"><a href="#signin">Sign In</a></li> <!-- Redirects to sign-in page -->
+  </ul> <!--  -->
   <div class="top">
     <div></div>
     <div class="ribbon">
