@@ -92,82 +92,90 @@
     font-weight: bold;
     font-size: 40px;
   }
-  ul {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
+  .navbar {
     overflow: hidden;
-    background-color: #9f9275;
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
+    background-color: #333;
   }
-  li {
-    display: inline;
-  }
-  li a {
-    display: block;
+
+  .navbar a {
+    float: left;
+    font-size: 16px;
     color: white;
     text-align: center;
     padding: 14px 16px;
     text-decoration: none;
-    font-family: fantasy;
   }
-  li > a:hover {
-    background-color: #8f8264;
-  }
-  .active{
-    background-color: #877a5d;
-  }
-  .dropdown{
+
+  .dropdown {
     float: left;
     overflow: hidden;
   }
+
+  .dropdown .dropbtn {
+    font-size: 16px;
+    border: none;
+    outline: none;
+    color: white;
+    padding: 14px 16px;
+    background-color: inherit;
+    font-family: inherit;
+    margin: 0;
+  }
+
+  .navbar .dropbtn:hover, .dropdown:hover .dropbtn {
+    background-color: red;
+  }
+
   .houses {
     display: none;
-    position: relative;
+    position: absolute;
     background-color: #f9f9f9;
     min-width: 160px;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
     z-index: 1;
   }
-  .houses > a {
+
+  .houses a {
+    float: none;
     color: black;
+    padding: 12px 16px;
+    text-decoration: none;
     display: block;
+    text-align: left;
   }
-  .houses > a:hover {
-    background-color: #f1f1f1
+
+  .houses a:hover {
+    background-color: #ddd;
   }
+
   .dropdown:hover .houses {
     display: block;
   }
 </style>
 <body>
-  <ul>
-    <li style="float:left"><a class="active" href="#podium">Podium</a></li> <!-- Home page if not signed in or if not administrator -->
-    <li style="float:left"><a href="#fullranking">Full Ranking</a></li> <!-- Only signed in users can view this option -->
-    <li style="float:left"><a href="#pointrecord">Point Record</a></li> <!-- Only administrators (teachers/house heads) can see this option -->
-    <li style="float:left">
-      <div class="dropdown"><a>Houses ▼</a>
-        <div class="houses">
-          <a href="#acres">Acres</a>
-          <a href="#acres">Dupont</a>
-          <a href="#acres">Grier</a>
-          <a href="#acres">Griffith</a>
-          <a href="#acres">Lamont</a>
-          <a href="#acres">Langtry</a>
-          <a href="#acres">Mac</a>
-          <a href="#acres">Marling</a>
-          <a href="#acres">Nation</a>
-          <a href="#acres">Pyper</a>
-          <a href="#acres">Rosseter</a>
-          <a href="#acres">Walsh</a>
-        </div>
+  <div class="navbar">
+    <a style="float:left" class="active" href="#podium">Podium</a> <!-- Home page if not signed in or if not administrator -->
+    <a style="float:left" href="#fullranking">Full Ranking</a> <!-- Only signed in users can view this option -->
+    <a style="float:left" href="#pointrecord">Point Record</a> <!-- Only administrators (teachers/house heads) can see this option -->
+    <div class="dropdown" style="float:left">
+      <button class="dropbtn">Houses ▼</button>
+      <div class="houses">
+        <a href="#acres">Acres</a>
+        <a href="#acres">Dupont</a>
+        <a href="#acres">Grier</a>
+        <a href="#acres">Griffith</a>
+        <a href="#acres">Lamont</a>
+        <a href="#acres">Langtry</a>
+        <a href="#acres">Mac</a>
+        <a href="#acres">Marling</a>
+        <a href="#acres">Nation</a>
+        <a href="#acres">Pyper</a>
+        <a href="#acres">Rosseter</a>
+        <a href="#acres">Walsh</a>
       </div>
-    </li> <!-- Dropdown menu -->
-    <li style="float:right"><a href="#signin">Sign In</a></li> <!-- Redirects to sign-in page -->
-  </ul> <!--  -->
+    </div> <!-- Dropdown menu -->
+    <a style="float:right" href="#signin">Sign In</a> <!-- Redirects to sign-in page -->
+  </div> <!--  -->
   <div class="top">
     <div></div>
     <div class="ribbon">
