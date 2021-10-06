@@ -8,42 +8,58 @@
   <script defer src="Podium.js" type="text/javascript"></script>
 </head>
 <style>
-  .title{
+  .top{
     display:grid;
-    gap: 0px;
-    grid-template-columns: 1fr 200px 1fr;
+    grid-template-columns: 1fr 5fr 1fr;
+    grid-template-rows: 400px;
+    grid-template: "container";
+    place-items: center;
+    place-content: center;
+    overflow: hidden;
   }
-  .title > h1{
+  .top > * {
+    grid-area: container;
+  }
+  .title{
     text-align: center;
-    font-size: 50px;
+    font-size: 75px;
     font-family: cursive;
     padding: 0px;
+    color: #9f9275;
+  }
+  .ribbon{
+    overflow: hidden;
+  }
+  .ribbon > .image {
+    width: 100%;
+    height: auto;
+    object-fit: fill;
   }
   .podium{
     display:grid;
     gap:15px;
     grid-template-columns: repeat(8, 1fr);
-    grid-template-rows: 50px 100px 100px 400px;
+    grid-template-rows: 50px 50px 50px 50px 400px;
   }
   .pedestal_1{
     background-color: purple;
     grid-column-start: 4;
     grid-column-end: span 2;
     grid-row-start: 2;
-    grid-row-end: span 3;
+    grid-row-end: span 4;
   }
   .pedestal_2{
     background-color:violet;
     grid-column-start: 2;
     grid-column-end: span 2;
-    grid-row-start: 3;
+    grid-row-start: 4;
     grid-row-end: span 2;
   }
   .pedestal_3{
     background-color:violet;
     grid-column-start: 6;
     grid-column-end: span 2;
-    grid-row-start: 4;
+    grid-row-start: 5;
     grid-row-end: span 1;
   }
   .text_1{
@@ -52,26 +68,50 @@
     grid-row-start: 1;
     grid-row-end: span 1;
     text-align: center;
+    font-family: Courier New, monospace;
+    font-weight: bold;
+    font-size: 40px;
   }
   .text_2{
     grid-column-start: 2;
     grid-column-end: span 2;
-    grid-row-start: 2;
-    grid-row-end: span 2;
+    grid-row-start: 3;
+    grid-row-end: span 1;
     text-align: center;
+    font-family: Courier New, monospace;
+    font-weight: bold;
+    font-size: 40px;
   }
   .text_3{
     grid-column-start: 6;
     grid-column-end: span 2;
-    grid-row-start: 3;
+    grid-row-start: 4;
     grid-row-end: span 1;
     text-align: center;
+    font-family: Courier New, monospace;
+    font-weight: bold;
+    font-size: 40px;
+  }
+  ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
   }
 </style>
 <body>
-  <div class="title">
+  <ul>
+    <li><a href="#podium">Podium</a></li> <!-- Home page if not signed in or if not administrator -->
+    <li><a href="#fullranking">Full Ranking</a></li> <!-- Only signed in users can view this option -->
+    <li><a href="#pointrecord">Point Record</a></li> <!-- Only administrators (teachers/house heads) can see this option -->
+    <li><a href="#houses">Houses</a></li> <!-- Dropdown menu -->
+    <li><a href="#signin">Sign In</a></li> <!-- Redirects to sign-in page -->
+  </ul> <!--  -->
+  <div class="top">
     <div></div>
-    <h1>Podium</h1>
+    <div class="ribbon">
+      <img class = "image" src="Ribbon.png" style="width:100%;">
+    </div>
+    <h1 class="title">Podium</h1>
     <div></div>
   </div>
   <div class="podium">
