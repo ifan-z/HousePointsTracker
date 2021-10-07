@@ -4,39 +4,38 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>HousePointsTracker</title>
-  <script defer src="Podium.js" type="text/javascript"></script>
+  <title>Podium</title>
+  <script defer type="module" src="./Podium.js" charset="utf-8"></script>
 </head>
 <style>
-  .top{
-    display:grid;
-    grid-template-columns: 1fr 5fr 1fr;
-    grid-template-rows: 400px;
+  .top{ /* Title */
+    display:grid; /* Creates CSS grid */
+    grid-template-columns: 1fr 5fr 1fr; /* Middle column (with title) takes up 5/7ths of the width of the screen (in theory, but it doesn't seem to have any effect even if I take out the entire line) */
+    grid-template-rows: 400px; /* Each row is 400px tall (only one row though) */
     grid-template: "container";
-    place-items: center;
-    place-content: center;
-    overflow: hidden;
+    place-items: center; /* Place items in the centre of the containers */
+    overflow: hidden; /* If an item is too big to fit, hides it */
   }
-  .top > * {
-    grid-area: container;
+  .top > * { /* All elements within the "top" div */
+    grid-area: container; /* Is a container */
   }
   .title{
-    text-align: center;
-    font-size: 75px;
-    font-family: cursive;
-    padding: 0px;
-    color: #9f9275;
+    text-align: center; /* Aligns the text to the centre of the screen */
+    font-size: 75px; /* Sets font size */
+    font-family: cursive; /* Sets font */
+    padding: 0px; /* No extra empty space above the title */
+    color: #9f9275; /* Sets the title text colour to a dark beige */
   }
   .ribbon{
-    overflow: hidden;
+    overflow: hidden; /* Hides overflow */
   }
   .ribbon > .image {
-    width: 100%;
-    height: auto;
-    object-fit: fill;
+    width: 100%; /* Lets image take up the entire width of the container */
+    height: auto; /* Height automatic */
+    object-fit: fill; /* Lets image fill the entire container, stretches and squishes to do so */
   }
   .podium{
-    display:grid;
+    display:grid; /*  */
     gap:15px;
     grid-template-columns: repeat(8, 1fr);
     grid-template-rows: 50px 50px 50px 50px 400px;
@@ -96,7 +95,7 @@
     margin: 0;
     padding: 0;
     overflow: hidden;
-    background-color: #9f9275;
+    background-color: #ccbe9f;
     /* position: fixed;
     top: 0;
     left: 0;
@@ -113,10 +112,10 @@
     font-family: fantasy;
   }
   .navigation > a:hover{
-    background-color: #8f8264;
+    background-color: #bdae8f;
   }
   .active{
-    background-color: #877a5d;
+    background-color: #b0a182;
   }
   .dropdown{
     float: left;
@@ -133,7 +132,7 @@
     margin: 0;
   }
   .navigation .dropbutton:hover, .dropdown:hover .dropbutton {
-    background-color: #8f8264;
+    background-color: #bdae8f;
   }
   .houses{
     display: none;
@@ -160,8 +159,8 @@
 </style>
 <body>
   <div class="navigation">
-    <a class="active" href="#podium">Podium</a> <!-- Home page if not signed in or if not administrator -->
-    <a href="#fullranking">Full Ranking</a> <!-- Only signed in users can view this option -->
+    <a class="active" href="./index.html">Podium</a> <!-- Home page if not signed in or if not administrator -->
+    <a href="./fullranking.html">Full Ranking</a> <!-- Only signed in users can view this option -->
     <a href="#pointrecord">Point Record</a> <!-- Only administrators (teachers/house heads) can see this option -->
     <div class="dropdown"> <!-- Dropdown menu -->
       <button class="dropbutton">Houses ▼</button>
@@ -180,7 +179,7 @@
         <a href="#walsh">Walsh</a>
       </div>
     </div>
-    <a href="#signin" style="float:right">Sign In</a>
+    <a href="./signin.html" style="float:right">Sign In</a>
   </div>
    <!--  -->
   <div class="top">

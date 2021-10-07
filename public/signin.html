@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>authTest</title>
+  <script defer type="module" src="./SignIn.js" charset="utf-8"></script>
+</head>
+<style>
+  .navigation{
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #ccbe9f;
+    /* position: fixed;
+    top: 0;
+    left: 0;
+    right: 0; */
+    /* The above part is causing issues with the dropdown menu, the fixed position is not allowing it to appear */
+  }
+  .navigation > a{
+    float: left;
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-family: fantasy;
+  }
+  .navigation > a:hover{
+    background-color: #bdae8f;
+  }
+  .active{
+    background-color: #b0a182;
+  }
+  .dropdown{
+    float: left;
+    overflow: hidden;
+  }
+  .dropdown .dropbutton{
+    font-size: 16px;
+    border: none;
+    outline: none;
+    color: white;
+    padding: 14px 16px;
+    background-color: inherit;
+    font-family: fantasy;
+    margin: 0;
+  }
+  .navigation .dropbutton:hover, .dropdown:hover .dropbutton {
+    background-color: #bdae8f;
+  }
+  .houses{
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+  }
+  .houses > a{
+    float: none;
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    text-align: left;
+  }
+  .houses > a:hover{
+    background-color: #ddd;
+  }
+  .dropdown:hover .houses{
+    display: block;
+  }
+</style>
+<body>
+  <div class="navigation">
+    <a href="index.html">Podium</a> <!-- Home page if not signed in or if not administrator -->
+    <a href="fullranking.html">Full Ranking</a> <!-- Only signed in users can view this option -->
+    <a href="#pointrecord">Point Record</a> <!-- Only administrators (teachers/house heads) can see this option -->
+    <div class="dropdown"> <!-- Dropdown menu -->
+      <button class="dropbutton">Houses ▼</button>
+      <div class="houses"> <!-- Options -->
+        <a href="#acres">Acres</a>
+        <a href="#dupont">Dupont</a>
+        <a href="#grier">Grier</a>
+        <a href="#griffith">Griffith</a>
+        <a href="#lamont">Lamont</a>
+        <a href="#langtry">Langtry</a>
+        <a href="#mac">Mac</a>
+        <a href="#marling">Marling</a>
+        <a href="#nation">Nation</a>
+        <a href="#pyper">Pyper</a>
+        <a href="#rosseter">Rosseter</a>
+        <a href="#walsh">Walsh</a>
+      </div>
+    </div>
+    <a class="active" href="#signin" style="float:right">Sign In</a>
+  </div>
+</body>
+</html>
