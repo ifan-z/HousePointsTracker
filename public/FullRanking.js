@@ -13,6 +13,15 @@ const firebaseApp = initializeApp({
 
 // setting up the fireStore database
 const db = getFirestore();
+let houses = [];
+
+class House{ //Creating a custom class called "House"
+  constructor(name, points, head){ //Has the following properties
+    this.name = name;
+    this.points = points;
+    this.head = head;
+  }
+}
 
 console.log(db);
 
@@ -20,4 +29,24 @@ console.log(db);
 const querySnapshot = await getDocs(collection(db, "Houses"));
 querySnapshot.forEach((doc) => {
   console.log(`${doc.id} => ${doc.data()}`);
+  console.log(doc.data().points);
+  houses.push(new House(doc.data().name, doc.data().points, doc.data().head));
+  console.log(houses);
 });
+
+
+function charCreate(){
+  //Getting the entry values from the form
+  let frm = document.getElementById("form");
+  let name = frm.elements["charName"].value;
+  let age = frm.elements["charAge"].value;
+  let gender = frm.elements["charGender"].value;
+  let personality = frm.elements["charPersonality"].value;
+  let ethnicity = frm.elements["charEthnicity"].value;
+  let description = document.getElementById("charDescription").value;
+  //Creating a new character to the characters array
+  characters.push(new Character(name, age, gender, personality, ethnicity, description));
+  localStorage.setItem("characters", JSON.stringify(characters));
+  document.getElementById("entryForm").style.visibility = "hidden";
+  location.reload();
+}
