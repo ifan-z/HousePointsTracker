@@ -4,8 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Full Ranking</title>
-  <script defer type="module" src="./FullRanking.js" charset="utf-8"></script>
+  <title>Point Record</title>
+  <script defer type="module" src="./PointRecord.js" charset="utf-8"></script>
 </head>
 <style>
   .navigation{
@@ -73,12 +73,27 @@
   .dropdown:hover .houses{
     display: block;
   }
+  #pointsForm{ /* Defining the characteristics of the pointsForm form */
+  	background-color:white;
+  	position:absolute; /* Stays in one place on the screen */
+  	visibility:hidden; /* Hides the form when you're first on the page */
+    top:100px;
+  	width:400px;
+  	margin-left:-200px;
+  	left:50%;
+  	border:solid;
+    border-width:3px;
+    border-color:darkviolet;
+    background-color:#ebe5fa; /* Light purple */
+    padding:20px;
+  	padding-top:10px;
+  }
 </style>
 <body>
   <div class="navigation">
     <a href="index.html">Podium</a> <!-- Home page if not signed in or if not administrator -->
-    <a class="active" href="fullranking.html">Full Ranking</a> <!-- Only signed in users can view this option -->
-    <a href="#pointrecord">Point Record</a> <!-- Only administrators (teachers/house heads) can see this option -->
+    <a href="fullranking.html">Full Ranking</a> <!-- Only signed in users can view this option -->
+    <a class="active" href="pointrecord.html">Point Record</a> <!-- Only administrators (teachers/house heads) can see this option -->
     <div class="dropdown"> <!-- Dropdown menu -->
       <button class="dropbutton">Houses ▼</button>
       <div class="houses"> <!-- Options -->
@@ -97,6 +112,29 @@
       </div>
     </div>
     <a href="./signin.html" style="float:right">Sign In</a>
+  </div>
+  <button onclick="showPointsForm()">Add Points</button>
+  <div id="pointsForm"> <!-- The form used to add points -->
+    <form id="form" name="form">
+      <h2>Add Points</h2>
+      <p>
+        <label>House:</label>
+        <br>
+        <select id="house" name="house"></select>
+      </p>
+      <p>
+        <label>Number of points:</label>
+        <br>
+        <input type="number" name="pointsAdded">
+      </p>
+      <p>
+        <label>Description</label>
+        <br>
+        <textarea name="text" rows="5" cols="47" id=pointDescription></textarea>
+      </p>
+    </form>
+    <button onClick="pointsAdd()">Submit</button>
+    <button onClick="cancelAdd()">Cancel</button>
   </div>
 </body>
 </html>
