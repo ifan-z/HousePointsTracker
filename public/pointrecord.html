@@ -73,6 +73,36 @@
   .dropdown:hover .houses{
     display: block;
   }
+
+   /* ----------------------------------------- */
+
+  .top{ /* Title */
+    display:grid; /* Creates CSS grid */
+    grid-template-columns: 1fr 5fr 1fr; /* Middle column (with title) takes up 5/7ths of the width of the screen (in theory, but it doesn't seem to have any effect even if I take out the entire line) */
+    grid-template-rows: 100px; /* Each row is 100px tall (only one row though) */
+    grid-template: "container";
+    place-items: center; /* Place items in the centre of the containers */
+    overflow: hidden; /* If an item is too big to fit, hides it */
+  }
+  .top > * { /* All elements within the "top" div */
+    grid-area: container; /* Is a container */
+  }
+  .title{
+    text-align: center; /* Aligns the text to the centre of the screen */
+    font-size: 65px; /* Sets font size */
+    font-family: cursive; /* Sets font */
+    padding: 0px; /* No extra empty space above the title */
+    color: #9f9275; /* Sets the title text colour to a dark beige */
+  }
+  .border{
+    overflow: hidden; /* Hides overflow */
+    width: 450px;
+  }
+  .border > .image {
+    width: 100%; /* Lets image take up the entire width of the container */
+    height: 220px; /* Height automatic */
+    object-fit: fill; /* Lets image fill the entire container, stretches and squishes to do so */
+  }
   #pointsForm{ /* Defining the characteristics of the pointsForm form */
   	background-color:white;
   	position:absolute; /* Stays in one place on the screen */
@@ -87,6 +117,25 @@
     background-color:#ebe5fa; /* Light purple */
     padding:20px;
   	padding-top:10px;
+  }
+  table{ /* Sets the width of the table to the width of the screen */
+    width: 100%;
+    table-layout: fixed;
+  }
+
+  th,td{ /* Sets the heading and body boxes in the table to align on the left and have a padding of 8px */
+    text-align: left;
+    padding: 8px;
+    overflow: hidden;
+  }
+
+  tr:nth-child(even){background-color: #f2f2f2}/* Every second row is light grey in colour */
+
+  th{ /* Sets the heading boxes in the table to be bold, a purple background, and white text */
+  	font-size:large;
+    font-family:Snell Roundhand;
+    background-color: #bdae8f;
+    color: white;
   }
 </style>
 <body>
@@ -113,7 +162,28 @@
     </div>
     <a href="./signin.html" style="float:right">Sign In</a>
   </div>
-  <button onclick="showPointsForm()">Add Points</button>
+  <br>
+  <div class="top">
+    <div></div>
+    <div class="border">
+      <img class = "image" src="FancyBorder.png" style="width:100%;">
+    </div>
+    <h1 class="title">Point Record</h1>
+    <div></div>
+  </div>
+  <div id="housePoints"> <!-- Table to display the basic information of all characters --> <!--  -->
+    <table id="pointsTable">
+      <tr>
+        <th style="width:10%">House</th>
+        <th style="width:15%">Name</th>
+        <th style="width:10%">Points Added</th>
+        <th style="width:15%">Date</th>
+        <th style="width:45%">Description</th>
+        <th style="width:5%">Delete</th>
+      </tr>
+    </table>
+    <button onclick="showPointsForm()">Add Points</button>
+  </div>
   <div id="pointsForm"> <!-- The form used to add points -->
     <form id="form" name="form">
       <h2>Add Points</h2>
