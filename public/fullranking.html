@@ -168,43 +168,17 @@
     <div class="border">
       <img class = "image" src="FancyBorder.png" style="width:100%;">
     </div>
-    <h1 class="title">Point Record</h1>
+    <h1 class="title">Full Ranking</h1>
     <div></div>
   </div>
   <div id="housePoints"> <!-- Table to display the basic information of all characters --> <!--  -->
-    <button id="showPointsForm">Add Points</button>
     <table id="pointsTable">
       <tr>
-        <th style="width:10%">House</th>
-        <th style="width:15%">Name</th>
-        <th style="width:10%">Points Added</th>
-        <th style="width:15%">Date</th>
-        <th style="width:45%">Description</th>
-        <th style="width:5%">Delete</th>
+        <th>House</th>
+        <th>Total Points</th>
+        <th>Rank</th>
       </tr>
     </table>
-  </div>
-  <div id="pointsForm"> <!-- The form used to add points -->
-    <form id="form" name="form">
-      <h2>Add Points</h2>
-      <p>
-        <label>House:</label>
-        <br>
-        <select id="house"></select>
-      </p>
-      <p>
-        <label>Number of points:</label>
-        <br>
-        <input type="number" id="pointsAdded">
-      </p>
-      <p>
-        <label>Description</label>
-        <br>
-        <textarea rows="5" cols="47" id=pointDescription></textarea>
-      </p>
-    </form>
-    <button id="submitPoints">Submit</button>
-    <button id="cancelPoints">Cancel</button>
   </div>
 </body>
 </html>

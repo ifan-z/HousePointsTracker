@@ -3,6 +3,7 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/9.0.0/firebase
 import { getFirestore } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js";
 import { collection, getDocs } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js";
 import { doc, setDoc } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js";
+import { getAuth } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-auth.js";
 
 // setting up my web app framework - use your apiKey and info
 const firebaseApp = initializeApp({
@@ -70,21 +71,29 @@ function addHouses(name){ //Function to add a house to the dropdown menu in the 
   x.add(option);
 }
 
-function addPoints(){
-  let frm = document.getElementById(form);
+document.getElementById("showPointsForm").onclick = function() {
+  document.getElementById("pointsForm").style.visibility = "visible";
+}
+
+document.getElementById("cancelPoints").onclick = function() {
+  document.getElementById("pointsForm").style.visibility = "hidden";
+}
+
+document.getElementById("submitPoints").onclick = function() {
+  let frm = document.getElementById("form");
   let houseName = frm.elements["house"].value;
-  let pAdd = frm.elements["pointsAdded"].value;
-  let pointDescription = frm.elemnts["pointDescription"].value;
+  let pAdd = Number(frm.elements["pointsAdded"].value);
+  let pointDescription = frm.elements["pointDescription"].value;
   let oldPoints;
   //Adding points to the right house
-  let house = db.collection("Houses").doc(houseName); //Saving the right document into a variable
+  const docRef = doc(db, "Houses", houseName);
+  const house = await getDoc(docRef); //Saving the right document into a variable
   house.get().then(function(doc) { //Retrieves the data from the document
     if(doc.exists){ //If the document you're selecting even exists in the collection
       oldPoints = doc.data().points; //Saves data from the database into a new variable
-      db.collection("Houses").doc(houseName).set(
-        //Changes the data in the database, adding the data we got from the form to the one from the database
-        {name: houseName, points: oldPoints + pAdd}
-      );
+      updateDoc(house, {
+        points: oldPoints + pAdd
+      });
     }else{
       // doc.data() will be undefined in this case
       console.log("No such document!");
@@ -93,24 +102,33 @@ function addPoints(){
     console.log("Error getting document:", error);
   });
   // Add a new document in collection "PointRecord"
-  await setDoc(doc(db, "PointRecord", "user"), {
-    date: "Today's Date",
+  setDoc(doc(db, "PointRecord", "user"), {
+    date: new Date(),
     description: pointDescription,
     pointsAdded: pAdd,
     house: houseName,
-    name: "user";
+    name: "user"
+    //name: displayName;
   });
   //Adding the entry to the database
 
   document.getElementById("pointsForm").style.visibility = "hidden";
 }
 
-function showPointsForm(){
-  document.getElementById("pointsForm").style.visibility = "visible";
-}
+//Getting current signed in user
+const auth = getAuth();
+const user = auth.currentUser;
+if (user !== null) {
+  // The user object has basic properties such as display name, email, etc.
+  const displayName = user.displayName;
+  const email = user.email;
+  const photoURL = user.photoURL;
+  const emailVerified = user.emailVerified;
 
-function cancelAdd(){
-  document.getElementById("pointsForm").style.visibility = "hidden";
+  // The user's ID, unique to the Firebase project. Do NOT use
+  // this value to authenticate with your backend server, if
+  // you have one. Use User.getToken() instead.
+  const uid = user.uid;
 }
 
 function pointDisplay(){ //Displays the point record table
