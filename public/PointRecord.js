@@ -1,9 +1,24 @@
 // Setting up the required components from the web links
-import { initializeApp } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js";
-import { getFirestore } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js";
-import { collection, getDocs } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js";
-import { doc, setDoc } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js";
-import { getAuth } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-auth.js";
+import {
+  initializeApp
+} from "https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js";
+import {
+  getFirestore,
+  collection,
+  getDocs,
+  doc,
+  setDoc,
+  getDoc,
+  updateDoc,
+  onSnapshot
+} from "https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js";
+import {
+  getAuth,
+  signInWithRedirect,
+  GoogleAuthProvider,
+  onAuthStateChanged,
+  signOut
+} from "https://www.gstatic.com/firebasejs/9.0.0/firebase-auth.js";
 
 // setting up my web app framework - use your apiKey and info
 const firebaseApp = initializeApp({
@@ -42,6 +57,85 @@ class Record{
   }
 }
 
+const provider = new GoogleAuthProvider();
+const auth = getAuth();
+const currentUser = auth.currentUser;
+let loggedIn;
+if(currentUser == null){
+  loggedIn = false;
+}else{
+  loggedIn = true;
+}
+// checking for changes in log-in status
+onAuthStateChanged(auth, (user) => {
+  if (user) {
+    const uid = user.uid;
+    console.log(user);
+    console.log(`Currently signed in as: ${user.displayName}`);
+    getUserStatus(user);
+    //Getting current signed in user
+    // The user object has basic properties such as display name, email, etc.
+    const displayName = user.displayName;
+    const email = user.email;
+    const photoURL = user.photoURL;
+    const emailVerified = user.emailVerified;
+  } else {
+    console.log(`Not signed in`);
+  }
+});
+let teacher;
+async function getUserStatus(user) {
+  // checking the user document for the current user
+  const docRef = doc(db, "users", user.uid);
+  const docSnap = await getDoc(docRef);
+
+  if (docSnap.exists()) {
+    console.log("Document data:", docSnap.data());
+    if (docSnap.data().teacher) {
+      console.log("A teacher!")
+      document.getElementById("showPointsForm").style.visibility = "visible";
+      teacher = true;
+    } else {
+      console.log("not a teacher...")
+      teacher = false;
+    }
+  } else {
+    // doc.data() will be undefined in this case
+    console.log("No such document!");
+    const userRef = collection(db, "users");
+    await setDoc(doc(userRef, user.uid), {
+      email: user.email,
+      teacher: false
+    });
+  }
+}
+if (currentUser) {
+  // User is signed in
+  loggedIn = true;
+} else {
+  // No user is signed in.
+  loggedIn = false;
+}
+
+if(loggedIn == true){
+  document.getElementById("signOut").style.visibility = "visible";
+  document.getElementById("signIn").style.visibility = "hidden";
+  document.getElementById("signOut").onclick = function() {
+    console.log("Signing Out")
+    signOut(auth).then(() => {
+      // Sign-out successful.
+    }).catch((error) => {
+      // An error happened.
+    });
+  }
+}else{
+  document.getElementById("signIn").style.visibility = "visible";
+  document.getElementById("signOut").style.visibility = "hidden";
+  document.getElementById("signIn").onclick = function() {
+    signInWithRedirect(auth, provider);
+  };
+}
+
 console.log(db);
 
 // getting the data from a collection called "Houses"
@@ -60,7 +154,7 @@ querySnapshotRecord.forEach((doc) => {
   console.log(pointRecord);
 });
 
-for(let i = 0; i < 12; i++){
+for(let i in houses){
   addHouses(houses[i].name); //Add houses to dropdown menu of form
 }
 
@@ -80,6 +174,10 @@ document.getElementById("cancelPoints").onclick = function() {
 }
 
 document.getElementById("submitPoints").onclick = function() {
+  addPoints();
+}
+
+async function addPoints(){
   let frm = document.getElementById("form");
   let houseName = frm.elements["house"].value;
   let pAdd = Number(frm.elements["pointsAdded"].value);
@@ -88,50 +186,23 @@ document.getElementById("submitPoints").onclick = function() {
   //Adding points to the right house
   const docRef = doc(db, "Houses", houseName);
   const house = await getDoc(docRef); //Saving the right document into a variable
-  house.get().then(function(doc) { //Retrieves the data from the document
-    if(doc.exists){ //If the document you're selecting even exists in the collection
-      oldPoints = doc.data().points; //Saves data from the database into a new variable
-      updateDoc(house, {
-        points: oldPoints + pAdd
-      });
-    }else{
-      // doc.data() will be undefined in this case
-      console.log("No such document!");
-    }
-  }).catch(function(error) {
-    console.log("Error getting document:", error);
+  oldPoints = Number(house.data().points);
+  await updateDoc(docRef, {
+    points: oldPoints + pAdd
   });
   // Add a new document in collection "PointRecord"
-  setDoc(doc(db, "PointRecord", "user"), {
+  await setDoc(doc(db, "PointRecord", "user"), {
     date: new Date(),
     description: pointDescription,
     pointsAdded: pAdd,
     house: houseName,
-    name: "user"
-    //name: displayName;
+    name: displayName
   });
-  //Adding the entry to the database
-
   document.getElementById("pointsForm").style.visibility = "hidden";
+  location.reload();
 }
 
-//Getting current signed in user
-const auth = getAuth();
-const user = auth.currentUser;
-if (user !== null) {
-  // The user object has basic properties such as display name, email, etc.
-  const displayName = user.displayName;
-  const email = user.email;
-  const photoURL = user.photoURL;
-  const emailVerified = user.emailVerified;
-
-  // The user's ID, unique to the Firebase project. Do NOT use
-  // this value to authenticate with your backend server, if
-  // you have one. Use User.getToken() instead.
-  const uid = user.uid;
-}
-
-function pointDisplay(){ //Displays the point record table
+function displayPoints(){ //Displays the point record table
   for(let i in pointRecord){
     let tbl = document.getElementById("pointsTable");
     let rowNumber = tbl.rows.length;
@@ -149,16 +220,18 @@ function pointDisplay(){ //Displays the point record table
     deCell.innerHTML = pointRecord[i].description;
     daCell.innerHTML = pointRecord[i].date;
     //Creating delete button
-    let deleteButton = document.createElement("BUTTON");
-    let dt = document.createTextNode("X");
-    deleteButton.appendChild(dt);
-    //Delete action wrapped in second function so that it does not automatically trigger
-    deleteButton.addEventListener("click", function(){
-      //houses[rowNumber-1].deleteEntry(rowNumber-1);
-    });
-    delCell.appendChild(deleteButton);
+    if(teacher == true){
+      let deleteButton = document.createElement("BUTTON");
+      let dt = document.createTextNode("X");
+      deleteButton.appendChild(dt);
+      //Delete action wrapped in second function so that it does not automatically trigger
+      deleteButton.addEventListener("click", function(){
+        //houses[rowNumber-1].deleteEntry(rowNumber-1);
+      });
+      delCell.appendChild(deleteButton);
+    }
   }
   console.log(pointRecord);
 }
 
-pointDisplay();
+displayPoints();
