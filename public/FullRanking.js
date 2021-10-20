@@ -16,12 +16,11 @@ const db = getFirestore();
 let houses = [];
 
 class House{ //Creating a custom class called "House"
-  constructor(name, points, head, colour, rank){ //Has the following properties
+  constructor(name, points, head, colour){ //Has the following properties
     this.name = name;
     this.points = points;
     this.head = head;
     this.colour = colour;
-    this.rank = rank;
   }
 }
 
@@ -32,12 +31,11 @@ const querySnapshot = await getDocs(collection(db, "Houses")); //Querying for th
 querySnapshot.forEach((doc) => {
   console.log(`${doc.id} => ${doc.data()}`);
   console.log(doc.data().points);
-  let rank;
-  let tempHouses = [];
-  tempHouses.push()
-  houses.push(new House(doc.id, doc.data().points, doc.data().head, doc.data().colour), rank); //Putting database info into the local array
+  houses.push(new House(doc.id, doc.data().points, doc.data().head, doc.data().colour)); //Putting database info into the local array
   console.log(houses);
 });
+
+houses.sort((a, b) => b.points - a.points);
 
 function pointDisplay(){ //Displays the point record table
   for(let i in houses){
@@ -48,9 +46,9 @@ function pointDisplay(){ //Displays the point record table
     let pCell = row.insertCell(1); //Total points column
     let rCell = row.insertCell(2); //Rank column
     //Accessing info
-    hCell.innerHTML = houses[i].house;
+    hCell.innerHTML = houses[i].name;
     pCell.innerHTML = houses[i].points;
-    rCell.innerHTML = houses[i].rank;
+    rCell.innerHTML = Number(i)+1;
   }
   console.log(houses);
 }
